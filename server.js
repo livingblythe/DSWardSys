@@ -17,9 +17,14 @@ app.post('/addserver', (req, res) => {
 
 app.post('/updateserver', (req, res) => {
   const index = servers.findIndex(s => s.JobId === req.body.JobId);
-  if (index !== -1) servers[index] = req.body;
+  if (index !== -1) {
+    servers[index] = req.body;
+  } else {
+    servers.push(req.body); // ✅ Add new server
+  }
   res.send({ status: 'updated' });
 });
+
 
 app.get('/getlist', (req, res) => {
   res.send({ servers });
