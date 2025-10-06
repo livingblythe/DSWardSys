@@ -36,8 +36,11 @@ app.post('/updateserver', (req, res) => {
 
 // ✅ Return full server list
 app.get('/getlist', (req, res) => {
-  res.json({ servers });
+  const now = Date.now() / 1000;
+  const activeServers = servers.filter(s => now - s.LastUpdated < 60);
+  res.json({ servers: activeServers });
 });
+
 
 // ✅ Remove server by JobId
 app.post('/removeserver', (req, res) => {
